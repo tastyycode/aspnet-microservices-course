@@ -17,7 +17,7 @@ namespace Discount.API.Extensions
             {
                 IServiceProvider services = scope.ServiceProvider;
                 IConfiguration configuration = services.GetRequiredService<IConfiguration>();
-                ILogger logger = services.GetRequiredService<ILogger>();
+                ILogger logger = services.GetRequiredService<ILogger<TContext>>();
 
                 try
                 {
