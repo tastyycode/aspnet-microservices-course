@@ -24,7 +24,7 @@ namespace Basket.API.Entities
                 decimal result = 0;
                 Items.ForEach(item =>
                 {
-                    result += item.Price * item.Quantity;
+                    result += (item.Price - item.Discount ?? 0) * item.Quantity;
                 });
                 return result;
             }
