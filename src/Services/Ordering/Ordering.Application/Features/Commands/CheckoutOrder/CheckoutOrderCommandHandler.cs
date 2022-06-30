@@ -37,8 +37,7 @@ namespace Ordering.Application.Features.Commands.CheckoutOrder
             var email = new Email()
             {
                 Body = $"Order {order.Id} created successfully.",
-                To = order.EmailAddress,
-                From = "hello@example.com",
+                To = order.EmailAddress
             };
 
             try
