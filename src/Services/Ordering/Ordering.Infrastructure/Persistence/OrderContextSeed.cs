@@ -28,7 +28,7 @@ namespace Ordering.Infrastructure.Persistence
                     AddressLine = "Example",
                     Country = "ExampleLand",
                     TotalPrice = 123
-                }
+                },
             };
         }
     }
