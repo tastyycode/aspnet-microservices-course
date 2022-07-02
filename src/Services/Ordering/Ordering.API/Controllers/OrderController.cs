@@ -6,6 +6,9 @@ using Ordering.Application.Features.Commands.UpdateOrder;
 using Ordering.Application.Features.Queries.GetOrdersList;
 using System.Net;
 
+using ValidationException = Ordering.Application.Exceptions.ValidationException;
+using NotFoundException = Ordering.Application.Exceptions.NotFoundException;
+
 namespace Ordering.API.Controllers
 {
     [ApiController]
@@ -30,9 +33,18 @@ namespace Ordering.API.Controllers
 
         [HttpPost(Name = "CheckoutOrder")]
         [ProducesResponseType((int)HttpStatusCode.OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<int>> CheckoutOrder([FromBody] CheckoutOrderCommand command)
         {
-            var result = await _mediator.Send(command);
+            int result;
+            try
+            {
+                result = await _mediator.Send(command);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
             return Ok(result);
         }
 
@@ -53,7 +65,18 @@ namespace Ordering.API.Controllers
         public async Task<ActionResult> DeleteOrder(int id)
         {
             var command = new DeleteOrderCommand() { Id = id };
-            await _mediator.Send(command);
+            try
+            {
+                await _mediator.Send(command);
+            }
+            catch (NotFoundException)
+            {
+                return NotFound();
+            }
+            catch (Exception)
+            {
+                return NoContent();
+            }
             return NoContent();
         }
     }
