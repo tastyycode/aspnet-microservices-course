@@ -86,6 +86,17 @@ services:
       - pgadmin_data:/root/.pgadmin
   ## End of Discount services ##
 
+  ## Ordering API services ##
+  orderdb:
+    container_name: orderdb
+    environment:
+      SA_PASSWORD: "Admin12345678"
+      ACCEPT_EULA: "Y"
+    restart: always
+    ports:
+      - "1433:1433"
+  ## End of Ordering API services ##
+
   ## Portainer services
   portainer:
     container_name: portainer
